@@ -59,7 +59,7 @@ import libcore.io.IoUtils;
  *
  * <p>The {@code Scanner} class is not thread-safe.
  */
-public final class Scanner implements Iterator<String> {
+public final class Scanner implements Closeable, Iterator<String> {
 
     private static final String NL = "\n|\r\n|\r|\u0085|\u2028|\u2029";
 
