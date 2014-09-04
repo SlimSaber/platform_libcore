@@ -42,6 +42,7 @@ import static java.nio.channels.SelectionKey.OP_CONNECT;
 import static java.nio.channels.SelectionKey.OP_READ;
 import static java.nio.channels.SelectionKey.OP_WRITE;
 import static libcore.io.OsConstants.EINTR;
+import static libcore.io.OsConstants.POLLERR;
 import static libcore.io.OsConstants.POLLHUP;
 import static libcore.io.OsConstants.POLLIN;
 import static libcore.io.OsConstants.POLLOUT;
@@ -258,7 +259,7 @@ final class SelectorImpl extends AbstractSelector {
 
             int ops = key.interestOpsNoCheck();
             int selectedOps = 0;
-            if ((pollFd.revents & POLLHUP) != 0) {
+            if ((pollFd.revents & POLLHUP) != 0 || (pollFd.revents & POLLERR) != 0) {
                 // If there was an error condition, we definitely want to wake listeners,
                 // regardless of what they're waiting for. Failure is always interesting.
                 selectedOps |= ops;
