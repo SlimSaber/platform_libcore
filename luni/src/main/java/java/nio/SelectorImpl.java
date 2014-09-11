@@ -19,16 +19,12 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 import java.nio.channels.ClosedSelectorException;
 import java.nio.channels.IllegalSelectorException;
-import java.nio.channels.SelectableChannel;
 import java.nio.channels.SelectionKey;
-import static java.nio.channels.SelectionKey.*;
 import java.nio.channels.Selector;
-import java.nio.channels.SocketChannel;
 import java.nio.channels.spi.AbstractSelectableChannel;
 import java.nio.channels.spi.AbstractSelectionKey;
 import java.nio.channels.spi.AbstractSelector;
 import java.nio.channels.spi.SelectorProvider;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -40,8 +36,15 @@ import libcore.io.IoBridge;
 import libcore.io.IoUtils;
 import libcore.io.Libcore;
 import libcore.io.StructPollfd;
-import libcore.util.EmptyArray;
-import static libcore.io.OsConstants.*;
+
+import static java.nio.channels.SelectionKey.OP_ACCEPT;
+import static java.nio.channels.SelectionKey.OP_CONNECT;
+import static java.nio.channels.SelectionKey.OP_READ;
+import static java.nio.channels.SelectionKey.OP_WRITE;
+import static libcore.io.OsConstants.EINTR;
+import static libcore.io.OsConstants.POLLHUP;
+import static libcore.io.OsConstants.POLLIN;
+import static libcore.io.OsConstants.POLLOUT;
 
 /*
  * Default implementation of java.nio.channels.Selector
