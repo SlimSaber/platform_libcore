@@ -1503,6 +1503,13 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * @throws IllegalArgumentException if {@code corePoolSize < 0}
      * @see #getCorePoolSize
      */
+     // Android-changed: Reverted code that threw an IAE when
+     // {@code corePoolSize} is greater than the {@linkplain #getMaximumPoolSize()
+     // maximum pool size}. This is due to defective code in a commonly used third
+     // party library that does something like :
+     //
+     // exec.setCorePoolSize(N);
+     // exec.setMaxPoolSize(N);
     public void setCorePoolSize(int corePoolSize) {
         if (corePoolSize < 0)
             throw new IllegalArgumentException();
