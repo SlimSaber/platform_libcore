@@ -1001,20 +1001,14 @@ public final class String implements Serializable, Comparable<String>, CharSeque
         int searchStart = 0;
         do {
             // Copy characters before the match...
-            // TODO: Perform this faster than one char at a time?
-            for (int i = searchStart; i < matchStart; ++i) {
-                result.append(charAt(i));
-            }
+            result.append(this, searchStart, matchStart);
             // Insert the replacement...
             result.append(replacementString);
             // And skip over the match...
             searchStart = matchStart + targetLength;
         } while ((matchStart = indexOf(targetString, searchStart)) != -1);
         // Copy any trailing chars...
-        // TODO: Perform this faster than one char at a time?
-        for (int i = searchStart; i < count; ++i) {
-            result.append(charAt(i));
-        }
+        result.append(this, searchStart, count);
         return result.toString();
     }
 
